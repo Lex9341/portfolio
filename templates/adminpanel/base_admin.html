@@ -1,0 +1,40 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Админ-панель</title>
+    <link rel="stylesheet" href="{% static 'adminpanel/css/admin.css' %}">
+    <script src="{% static 'adminpanel/js/admin.js' %}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">⚡ Admin</div>
+        <nav class="menu">
+            <a href="{% url 'admin_dashboard' %}" 
+                class="menu-item {% if request.path == '/' or request.path == '/adminpanel/' %}active{% endif %}">
+                <span class="icon">🏠</span> Dashboard
+            </a>
+
+            <a href="{% url 'admin_projects' %}" 
+                class="menu-item {% if '/projects/' in request.path %}active{% endif %}">
+                <span class="icon">📂</span> Projects
+            </a>
+
+            <a href="{% url 'admin_skills' %}" 
+                class="menu-item {% if '/skills/' in request.path %}active{% endif %}">
+                <span class="icon">⚙️</span> Skills
+            </a>
+
+            <a href="{% url 'adminpanel-logout' %}" class="menu-item logout">
+                <span class="icon">🚪</span> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

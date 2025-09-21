@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top left, #111, #000);
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* эффект "глюка" для заголовка */
+.glitch {
+    font-size: 2rem;
+    position: relative;
+    color: #0ff;
+    text-shadow: 0 0 4px #0ff, 0 0 10px #0ff;
+    animation: flicker 2s infinite alternate;
+}
+.glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+}
+.glitch::before {
+    color: #f0f;
+    transform: translate(2px, -2px);
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+}
+.glitch::after {
+    color: #0f0;
+    transform: translate(-2px, 2px);
+    clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        opacity: 0.3;
+    }
+}
+
+.login-wrapper {
+    width: 320px;
+    padding: 20px;
+    background: rgba(20,20,20,0.8);
+    border-radius: 12px;
+    box-shadow: 0 0 20px #0ff;
+    backdrop-filter: blur(8px);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    position: relative;
+    margin: 25px 0;
+}
+.input-group input {
+    width: 100%;
+    padding: 12px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #555;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+}
+.input-group label {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    color: #888;
+    pointer-events: none;
+    transition: 0.3s;
+}
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 0.8rem;
+    color: #0ff;
+}
+.bar {
+    display: block;
+    height: 2px;
+    background: #0ff;
+    width: 0;
+    transition: 0.3s;
+}
+.input-group input:focus ~ .bar {
+    width: 100%;
+}
+
+.btn-neon {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #0ff;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #0ff inset;
+}
+.btn-neon:hover {
+    background: #0cc;
+    box-shadow: 0 0 20px #0ff, 0 0 40px #0ff inset;
+    transform: scale(1.05);
+}

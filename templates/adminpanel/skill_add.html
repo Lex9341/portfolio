@@ -1,0 +1,15 @@
+{% extends "adminpanel/base_admin.html" %}
+{% block content %}
+<h1>➕ Добавить навык</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <label>Название</label>
+    <input type="text" name="name" required>
+
+    <label>Уровень (0-100)</label>
+    <input type="number" name="level" min="0" max="100" required>
+
+    <button type="submit" class="btn">Добавить</button>
+</form>
+{% endblock %}
