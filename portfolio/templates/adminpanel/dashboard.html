@@ -1,0 +1,76 @@
+{% extends "adminpanel/base_admin.html" %}
+{% block content %}
+<h1>📊 Dashboard</h1>
+
+<section class="stats-grid">
+    <div class="stat-card"><h3>Проекты</h3><p>{{ stats.projects_count }}</p></div>
+    <div class="stat-card"><h3>Навыки</h3><p>{{ stats.skills_count }}</p></div>
+    <div class="stat-card"><h3>Пользователи</h3><p>{{ stats.users_count }}</p></div>
+</section>
+
+<div class="charts-grid">
+    <div class="chart-box">
+        <h3>Распределение проектов по тегам</h3>
+        <canvas id="tagsChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+        <h3>Уровни навыков</h3>
+        <canvas id="skillsChart"></canvas>
+    </div>
+
+    <div class="chart-box full">
+        <h3>Проекты по месяцам</h3>
+        <canvas id="monthlyChart"></canvas>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Теги
+    const tagsData = {{ tags_data|safe }};
+    new Chart(document.getElementById("tagsChart"), {
+        type: "pie",
+        data: {
+            labels: tagsData.map(t => t.name),
+            datasets: [{
+                data: tagsData.map(t => t.projects_count),
+                backgroundColor: ["#4CAF50","#2196F3","#FF9800","#9C27B0","#E91E63"]
+            }]
+        }
+    });
+
+    // Навыки
+    const skillsData = {{ skills_data|safe }};
+    new Chart(document.getElementById("skillsChart"), {
+        type: "bar",
+        data: {
+            labels: skillsData.map(s => s.name),
+            datasets: [{
+                label: "Level",
+                data: skillsData.map(s => s.level),
+                backgroundColor: "#7cf3ff"
+            }]
+        },
+        options: { scales: { y: { beginAtZero: true, max: 100 } } }
+    });
+
+    // Проекты по месяцам
+    const monthlyData = {{ monthly_data|safe }};
+    const months = ["Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"];
+    new Chart(document.getElementById("monthlyChart"), {
+        type: "line",
+        data: {
+            labels: monthlyData.map(m => months[parseInt(m.month)-1]),
+            datasets: [{
+                label: "Проекты",
+                data: monthlyData.map(m => m.count),
+                borderColor: "#4CAF50",
+                fill: false,
+                tension: 0.3
+            }]
+        }
+    });
+});
+</script>
+{% endblock %}
